@@ -1,9 +1,11 @@
 import NavBar from "@/components/NavBar";
-import Image from "next/image";
-export default function Home() {
+import pb from "../lib/pocketbase";
+import { revalidatePath } from "next/cache";
+
+export default async function Home() {
   return (
     <main className="relative h-screen">
-      <NavBar></NavBar>
+      <NavBar />
     </main>
   );
 }

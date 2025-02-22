@@ -31,9 +31,17 @@ const NavBar = () => {
             ))}
           </ul>
         </div>
+        if (!loading && user)
+        {
+          <div className="px-12 h-full flex justify-center items-center max-lg:hidden">
+            <a href="./login">
+              <Button>Hello!</Button>
+            </a>
+          </div>
+        }
         <div className="px-12 h-full flex justify-center items-center max-lg:hidden">
           <a href="./login">
-            <Button>Join Us</Button>
+            <Button>Join us</Button>
           </a>
         </div>
       </nav>
