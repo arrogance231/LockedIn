@@ -1,9 +1,23 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { navLinks } from "@/constants/index";
 import Image from "next/image";
+import useAuth from "@/app/hooks/useAuth"; 
+
 const NavBar = () => {
+  const { user, loading, logout } = useAuth();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return null;
+  }
+
   return (
     <div>
       <nav className="flex justify-between bg-[#4A6397] h-[60px]">
@@ -31,19 +45,17 @@ const NavBar = () => {
             ))}
           </ul>
         </div>
-        if (!loading && user)
-        {
+        {!loading && user ? (
+          <div className="px-12 h-full flex justify-center items-center max-lg:hidden">
+            <Button onClick={logout}>Logout</Button>
+          </div>
+        ) : (
           <div className="px-12 h-full flex justify-center items-center max-lg:hidden">
             <a href="./login">
-              <Button>Hello!</Button>
+              <Button>Join us</Button>
             </a>
           </div>
-        }
-        <div className="px-12 h-full flex justify-center items-center max-lg:hidden">
-          <a href="./login">
-            <Button>Join us</Button>
-          </a>
-        </div>
+        )}
       </nav>
     </div>
   );

@@ -1,5 +1,5 @@
 import NavBar from "@/components/NavBar";
-import pb from "../lib/pocketbase";
+import pb from "../lib/pocketbase_init";
 import { revalidatePath } from "next/cache";
 
 export default async function Home() {
