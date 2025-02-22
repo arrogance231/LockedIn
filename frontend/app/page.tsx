@@ -7,18 +7,18 @@ import { motion } from "framer-motion";
 import { MoveRight, PhoneCall } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import PocketBase from 'pocketbase';
+import PocketBase from "pocketbase";
 
-const pb = new PocketBase('http://127.0.0.1:8090');
+const pb = new PocketBase("http://127.0.0.1:8090");
 
 // example update data
 const data = {
-    "vol_name": "test",
-    "email": "test@example.com",
-    "pending_events": "JSON",
-    "reward_points": 123,
-    "location": "test",
-    "events_completed": 123
+  vol_name: "test",
+  email: "test@example.com",
+  pending_events: "JSON",
+  reward_points: 123,
+  location: "test",
+  events_completed: 123,
 };
 
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
@@ -59,7 +59,7 @@ export default function Home() {
           <div className="w-1/2 flex flex-col p-10 justify-around">
             <div className="flex">
               <div className="flex gap-2 justify-center">
-                <h1 className="font-poppins text-[#DA0000] text-[150px] ">
+                <h1 className="font-poppins animate-gradient bg-gradient-to-l from-indigo-700 to-cyan-200 bg-clip-text text-transparent text-[150px] ">
                   Bayani
                 </h1>
                 <div className="">
@@ -68,7 +68,7 @@ export default function Home() {
                     {titles.map((title, index) => (
                       <motion.span
                         key={index}
-                        className="text-center absolute font-normal text-[150px] animate-gradient bg-gradient-to-l from-indigo-700 to-cyan-200 bg-clip-text text-transparent font-sans "
+                        className="text-center absolute font-normal text-[150px] font-poppins text-[#DA0000] "
                         initial={{ opacity: 0, y: "-100" }}
                         transition={{ type: "spring", stiffness: 50 }}
                         animate={
@@ -91,7 +91,7 @@ export default function Home() {
               </div>
             </div>
             <div className="mb-10">
-              <p className="text-3xl text-center text-orange-400 font-sans font-bold top-5">
+              <p className="text-[35px] text-orange-400 font-sans font-bold top-5">
                 "Empowering Heroes, Uniting as One!"
               </p>
             </div>
