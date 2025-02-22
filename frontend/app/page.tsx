@@ -45,7 +45,7 @@ export default function Home() {
           <div className="w-1/2 flex flex-col p-10 justify-around">
             <div className="flex">
               <div className="flex gap-2 justify-center">
-                <h1 className="text-[150px] font-sans text-[#DA0000] font-extrabold ">
+                <h1 className="font-poppins text-[#DA0000] text-[150px] ">
                   Bayani
                 </h1>
                 <div className="">
@@ -77,7 +77,7 @@ export default function Home() {
               </div>
             </div>
             <div className="mb-10">
-              <p className="text-3xl text-center text-orange-400 font-sans font-bold">
+              <p className="text-3xl text-center text-orange-400 font-sans font-bold top-5">
                 "Empowering Heroes, Uniting as One!"
               </p>
             </div>
