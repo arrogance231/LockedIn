@@ -1,12 +1,9 @@
 from fastapi import FastAPI, HTTPException
 import requests
 
-
-#The code snippet below is made entirely by Generative AI, OpenAI's GPT-o4 model.
-# Initialize FastAPI app
 app = FastAPI()
 
-# PocketBase API URL (Replace with your actual PocketBase URL)
+# PocketBase API URL
 POCKETBASE_URL = "http://localhost:8090/api/collections"
 
 # Function to interact with PocketBase API
@@ -34,22 +31,50 @@ def pocketbase_request(collection: str, method: str = "GET", data: dict = None, 
     except requests.exceptions.RequestException as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-# CRUD Routes for Users
-@app.get("/users/{user_id}")
-def get_user(user_id: str):
-    return pocketbase_request("users", "GET", record_id=user_id)
+# Enlist Volunteer in an Event
+@app.post("/events/{event_id}/enlist/{volunteer_id}")
+def enlist_volunteer(event_id: str, volunteer_id: str):
+    # Get the event details
+    event = pocketbase_request("events", "GET", record_id=event_id)
+    if not event:
+        raise HTTPException(status_code=404, detail="Event not found")
 
-@app.post("/users")
-def create_user(user_data: dict):
-    return pocketbase_request("users", "POST", data=user_data)
+    # Get the volunteer details
+    volunteer = pocketbase_request("volunteer", "GET", record_id=volunteer_id)
+    if not volunteer:
+        raise HTTPException(status_code=404, detail="Volunteer not found")
 
-@app.put("/users/{user_id}")
-def update_user(user_id: str, user_data: dict):
-    return pocketbase_request("users", "PUT", data=user_data, record_id=user_id)
+    # Ensure volunteer_list is a list
+    volunteer_list = event.get("volunteer_list", [])
+    if isinstance(volunteer_list, str):  # If it's stored as JSON string
+        import json
+        volunteer_list = json.loads(volunteer_list)
 
-@app.delete("/users/{user_id}")
-def delete_user(user_id: str):
-    return pocketbase_request("users", "DELETE", record_id=user_id)
+    # Check if volunteer is already enlisted
+    if volunteer_id in volunteer_list:
+        raise HTTPException(status_code=400, detail="Volunteer already enlisted")
+
+    # Add volunteer to event's volunteer list
+    volunteer_list.append(volunteer_id)
+
+    # Update event with new volunteer list
+    event_update = {"volunteer_list": volunteer_list}
+    pocketbase_request("events", "PUT", data=event_update, record_id=event_id)
+
+    # Ensure volunteer has an events_list to track their participation
+    events_list = volunteer.get("events_list", [])
+    if isinstance(events_list, str):  # If stored as JSON string
+        import json
+        events_list = json.loads(events_list)
+
+    # Add event to volunteer’s record
+    events_list.append(event_id)
+
+    # Update volunteer's record
+    volunteer_update = {"events_list": events_list}
+    pocketbase_request("volunteer", "PUT", data=volunteer_update, record_id=volunteer_id)
+
+    return {"message": "Volunteer enlisted successfully", "event_id": event_id, "volunteer_id": volunteer_id}
 
 # CRUD Routes for Events
 @app.get("/events/{event_id}")
@@ -68,23 +93,6 @@ def update_event(event_id: str, event_data: dict):
 def delete_event(event_id: str):
     return pocketbase_request("events", "DELETE", record_id=event_id)
 
-# CRUD Routes for Organizations
-@app.get("/organizations/{org_id}")
-def get_organization(org_id: str):
-    return pocketbase_request("organization", "GET", record_id=org_id)
-
-@app.post("/organizations")
-def create_organization(org_data: dict):
-    return pocketbase_request("organization", "POST", data=org_data)
-
-@app.put("/organizations/{org_id}")
-def update_organization(org_id: str, org_data: dict):
-    return pocketbase_request("organization", "PUT", data=org_data, record_id=org_id)
-
-@app.delete("/organizations/{org_id}")
-def delete_organization(org_id: str):
-    return pocketbase_request("organization", "DELETE", record_id=org_id)
-
 # CRUD Routes for Volunteers
 @app.get("/volunteers/{volunteer_id}")
 def get_volunteer(volunteer_id: str):
@@ -101,5 +109,3 @@ def update_volunteer(volunteer_id: str, volunteer_data: dict):
 @app.delete("/volunteers/{volunteer_id}")
 def delete_volunteer(volunteer_id: str):
     return pocketbase_request("volunteer", "DELETE", record_id=volunteer_id)
-
-# Run using: uvicorn filename:app --reload
