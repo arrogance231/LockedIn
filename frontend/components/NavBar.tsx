@@ -1,9 +1,14 @@
+"use client";
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { navLinks } from "@/constants/index";
 import Image from "next/image";
+import useAuth from "@/app/hooks/useAuth";
+
 const NavBar = () => {
+  const { user, loading } = useAuth();
+
   return (
     <div>
       <nav className="flex justify-between bg-[#4A6397] h-[60px]">
@@ -31,19 +36,20 @@ const NavBar = () => {
             ))}
           </ul>
         </div>
-        if (!loading && user)
-        {
+
+        {!loading && user ? (
           <div className="px-12 h-full flex justify-center items-center max-lg:hidden">
             <a href="./login">
               <Button>Hello!</Button>
             </a>
           </div>
-        }
-        <div className="px-12 h-full flex justify-center items-center max-lg:hidden">
-          <a href="./login">
-            <Button>Join us</Button>
-          </a>
-        </div>
+        ) : (
+          <div className="px-12 h-full flex justify-center items-center max-lg:hidden">
+            <a href="./login">
+              <Button>Join us</Button>
+            </a>
+          </div>
+        )}
       </nav>
     </div>
   );
