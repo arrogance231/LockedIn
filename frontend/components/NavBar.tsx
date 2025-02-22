@@ -19,7 +19,7 @@ const NavBar = () => {
   }
 
   return (
-    <nav className="flex justify-between items-center bg-transparent h-[60px] w-full p-4 px-8 my-2 text-white ">
+    <nav className="flex justify-between items-center bg-transparent h-[60px] w-full p-4 px-8 my-2 text-white border-b-[2px] border-b-black">
       <div className="flex items-center border-2 border-gray-700 rounded-3xl p-2 flex-shrink-0 bg-gray-200">
         <Image
           src="/search.svg"

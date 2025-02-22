@@ -1,25 +1,11 @@
 "use client";
 import ObserverProvider from "@/components/ui/ObserverProvider";
 import NavBar from "@/components/NavBar";
-import { Hero } from "@/components/ui/animated-hero";
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { MoveRight, PhoneCall } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import PocketBase from 'pocketbase';
 
-const pb = new PocketBase('http://127.0.0.1:8090');
 
-// example update data
-const data = {
-    "vol_name": "test",
-    "email": "test@example.com",
-    "pending_events": "JSON",
-    "reward_points": 123,
-    "location": "test",
-    "events_completed": 123
-};
 
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { SparklesCore } from "@/components/ui/sparkles";
@@ -92,7 +78,7 @@ export default function Home() {
             </div>
             <div className="mb-10">
               <p className="text-3xl text-center text-orange-400 font-sans font-bold">
-                "Empowering Heroes, Uniting as One!"
+                Empowering Heroes, Uniting as One!
               </p>
             </div>
             <div className="flex flex-col gap-8">
@@ -159,7 +145,7 @@ export default function Home() {
                 background="transparent"
                 minSize={0.6}
                 maxSize={1.4}
-                particleDensity={100}
+                particleDensity={20}
                 className="w-full h-full"
                 particleColor="#907F7F"
                 speed={4}
