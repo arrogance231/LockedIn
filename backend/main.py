@@ -104,9 +104,22 @@ def get_volunteer(volunteer_id: str):
 def create_volunteer(volunteer_data: dict):
     return pocketbase_request("volunteers", "POST", data=volunteer_data)
 
-@app.put("/volunteers/{volunteer_id}")
-def update_volunteer(volunteer_id: str, volunteer_data: dict):
-    return pocketbase_request("volunteers", "PUT", data=volunteer_data, record_id=volunteer_id)
+# @app.put("/volunteers/{volunteer_id}")
+# def update_volunteer(volunteer_id: str, volunteer_data: dict):
+#     return pocketbase_request("volunteers", "PUT", data=volunteer_data, record_id=volunteer_id)
+
+
+#FOR UPDATE, DIRECTLY CALL IT IN TYPESCRIPT.
+# Example:
+# const data = {
+#     "vol_name": "test",
+#     "email": "test@example.com",
+#     "pending_events": "JSON",
+#     "reward_points": 123,
+#     "location": "test",
+#     "events_completed": 123
+# };
+# const record = await pb.collection('volunteers').update('RECORD_ID', data);
 
 @app.delete("/volunteers/{volunteer_id}")
 def delete_volunteer(volunteer_id: str):

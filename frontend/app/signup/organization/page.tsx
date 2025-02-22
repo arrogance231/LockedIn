@@ -10,6 +10,7 @@ const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [description, setDescription] = useState('');
     const [error, setError] = useState('');
     const router = useRouter();
 
@@ -19,13 +20,10 @@ const SignUp = () => {
             setError('Passwords do not match');
             return;
         }
-        const vol_data = {
-            vol_name: name,
+        const org_data = {
+            name,
             email,
-            pending_events : [],
-            reward_points: 0,
-            location: 'none',
-            completed_events: [],
+            description
         }
 
         const data = {
@@ -34,12 +32,12 @@ const SignUp = () => {
             email,
             emailVisibility: true,
             name,
-            usertype: 'volunteers',
+            usertype: 'organization',
         };
 
         try {
             const record = await pb.collection('users').create(data);
-            const vol_record = await pb.collection('volunteers').create(vol_data);
+            const org_record = await pb.collection('organization').create(org_data);
             //await pb.collection('users').requestVerification(email);
             router.push('/login');
         } catch (err: any) {
@@ -90,6 +88,15 @@ const SignUp = () => {
                         id="confirmPassword"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                    />
+                </div>
+                <div>
+                    <label htmlFor="description">Description:</label>
+                    <textarea
+                        id="description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
                         required
                     />
                 </div>

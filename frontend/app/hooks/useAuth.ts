@@ -6,7 +6,7 @@ export interface User {
   id: string;
   email: string;
   username?: string;
-  // Add any additional fields you expect from PocketBase's user record
+  usertype?: string; // ✅ Add this field (either "volunteers" or "organization")
 }
 
 export default function useAuth() {
@@ -14,14 +14,28 @@ export default function useAuth() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Check if a user is already logged in when the hook mounts
+  // ✅ Fetch full user data when authenticated
+  const fetchUserData = async (userId: string) => {
+    try {
+      const fullUser = await pb.collection("users").getOne(userId);
+      setUser(fullUser as unknown as User);
+    } catch (error) {
+      console.error("Failed to fetch user details:", error);
+      setUser(null);
+    }
+  };
+
+  // ✅ Check if a user is already logged in on component mount
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        // pb.authStore.model returns the authenticated user, if any
-        const authUser = pb.authStore.model;
-        setUser(authUser ? (authUser as unknown as User) : null);
-      } catch (error: unknown) {
+        const authUser = pb.authStore.model; // Only contains default fields
+        if (authUser) {
+          await fetchUserData(authUser.id); // Fetch full user data
+        } else {
+          setUser(null);
+        }
+      } catch (error) {
         setUser(null);
       } finally {
         setLoading(false);
@@ -31,13 +45,13 @@ export default function useAuth() {
     checkAuth();
   }, []);
 
-  // Login using PocketBase's authWithPassword method
+  // ✅ Login method (fetches full user data)
   const login = async (email: string, password: string) => {
     setLoading(true);
     setError(null);
     try {
       const authData = await pb.collection("users").authWithPassword(email, password);
-      setUser(authData.record ? (authData.record as unknown as User) : null);
+      await fetchUserData(authData.record.id); // ✅ Fetch full user details
       return authData;
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -51,8 +65,8 @@ export default function useAuth() {
     }
   };
 
-  // Signup creates a new user record and then logs the user in
-  const signup = async (email: string, password: string, username: string) => {
+  // ✅ Signup method (fetches full user data after signup)
+  const signup = async (email: string, password: string, username: string, usertype: string) => {
     setLoading(true);
     setError(null);
     try {
@@ -61,9 +75,9 @@ export default function useAuth() {
         password,
         passwordConfirm: password,
         username,
+        usertype, // ✅ Ensure the usertype is saved on signup
       });
-      // Immediately log the user in after signup:
-      await login(email, password);
+      await login(email, password); // ✅ Auto-login after signup
       return newUser;
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -77,7 +91,7 @@ export default function useAuth() {
     }
   };
 
-  // Logout clears the PocketBase auth store and resets the user state
+  // ✅ Logout method
   const logout = async () => {
     setLoading(true);
     setError(null);

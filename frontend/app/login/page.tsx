@@ -1,13 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import useAuth from "../hooks/useAuth";
 import Image from "next/image";
 import { SparklesCore } from "@/components/ui/sparkles";
 import { navLinks } from "@/constants";
 import React from "react";
-import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
-import Link from "next/link";
+import useAuth from "@/app/hooks/useAuth";
+import pb from "../lib/pocketbase_init";
 
 export default function LoginPage() {
   const { user, login, loading } = useAuth();
@@ -27,7 +26,8 @@ export default function LoginPage() {
     e.preventDefault();
     setLocalError("");
     try {
-      await login(email, password);
+      const authData = await pb.collection('users').authWithPassword(email, password);
+      pb.collection('users').update(authData.record.id, { isLoggedIn: true,last_login: new Date() });
       router.refresh();
       router.replace("/browse");
     } catch (error: unknown) {
