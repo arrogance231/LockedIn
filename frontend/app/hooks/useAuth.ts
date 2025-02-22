@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import pb from "../lib/pocketbase";
+import pb from "../lib/pocketbase_init";
 
 export interface User {
   id: string;
@@ -36,9 +36,7 @@ export default function useAuth() {
     setLoading(true);
     setError(null);
     try {
-      const authData = await pb
-        .collection("users")
-        .authWithPassword(email, password);
+      const authData = await pb.collection("users").authWithPassword(email, password);
       setUser(authData.record ? (authData.record as unknown as User) : null);
       return authData;
     } catch (error: unknown) {
