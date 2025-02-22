@@ -6,10 +6,10 @@ migrate((app) => {
   collection.fields.addAt(8, new Field({
     "autogeneratePattern": "",
     "hidden": false,
-    "id": "text4133428192",
+    "id": "text715337560",
     "max": 0,
     "min": 0,
-    "name": "user_type",
+    "name": "usertype",
     "pattern": "",
     "presentable": false,
     "primaryKey": false,
@@ -23,7 +23,7 @@ migrate((app) => {
   const collection = app.findCollectionByNameOrId("_pb_users_auth_")
 
   // remove field
-  collection.fields.removeById("text4133428192")
+  collection.fields.removeById("text715337560")
 
   return app.save(collection)
 })

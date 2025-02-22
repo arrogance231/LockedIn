@@ -19,25 +19,12 @@ migrate((app) => {
         "type": "text"
       },
       {
-        "cascadeDelete": false,
-        "collectionId": "_pb_users_auth_",
-        "hidden": false,
-        "id": "relation1914026624",
-        "maxSelect": 1,
-        "minSelect": 0,
-        "name": "org",
-        "presentable": false,
-        "required": true,
-        "system": false,
-        "type": "relation"
-      },
-      {
         "autogeneratePattern": "",
         "hidden": false,
-        "id": "text724990059",
+        "id": "text1781385543",
         "max": 0,
         "min": 0,
-        "name": "title",
+        "name": "event_title",
         "pattern": "",
         "presentable": false,
         "primaryKey": false,
@@ -46,37 +33,12 @@ migrate((app) => {
         "type": "text"
       },
       {
-        "autogeneratePattern": "",
         "hidden": false,
-        "id": "text4274335913",
-        "max": 0,
-        "min": 0,
-        "name": "content",
-        "pattern": "",
-        "presentable": false,
-        "primaryKey": false,
-        "required": false,
-        "system": false,
-        "type": "text"
-      },
-      {
-        "hidden": false,
-        "id": "date2862495610",
-        "max": "",
-        "min": "",
-        "name": "date",
-        "presentable": false,
-        "required": false,
-        "system": false,
-        "type": "date"
-      },
-      {
-        "hidden": false,
-        "id": "file3309110367",
+        "id": "file383471497",
         "maxSelect": 1,
         "maxSize": 0,
         "mimeTypes": [],
-        "name": "image",
+        "name": "picture",
         "presentable": false,
         "protected": false,
         "required": false,
@@ -86,12 +48,49 @@ migrate((app) => {
       },
       {
         "hidden": false,
+        "id": "json4068075828",
+        "maxSize": 0,
+        "name": "volunteer_list",
+        "presentable": false,
+        "required": false,
+        "system": false,
+        "type": "json"
+      },
+      {
+        "hidden": false,
         "id": "bool1028501215",
         "name": "isFinished",
         "presentable": false,
         "required": false,
         "system": false,
         "type": "bool"
+      },
+      {
+        "cascadeDelete": false,
+        "collectionId": "pbc_2524325754",
+        "hidden": false,
+        "id": "relation1542800728",
+        "maxSelect": 1,
+        "minSelect": 0,
+        "name": "field",
+        "presentable": false,
+        "required": false,
+        "system": false,
+        "type": "relation"
+      },
+      {
+        "autogeneratePattern": "",
+        "hidden": false,
+        "id": "text343859455",
+        "max": 0,
+        "min": 0,
+        "name": "event_desc",
+        "pattern": "",
+        "presentable": false,
+        "primaryKey": false,
+        "required": false,
+        "system": false,
+        "type": "text"
       },
       {
         "hidden": false,
@@ -114,10 +113,10 @@ migrate((app) => {
         "type": "autodate"
       }
     ],
-    "id": "pbc_1687431684",
+    "id": "pbc_4041782348",
     "indexes": [],
     "listRule": null,
-    "name": "events",
+    "name": "event",
     "system": false,
     "type": "base",
     "updateRule": null,
@@ -126,7 +125,7 @@ migrate((app) => {
 
   return app.save(collection);
 }, (app) => {
-  const collection = app.findCollectionByNameOrId("pbc_1687431684");
+  const collection = app.findCollectionByNameOrId("pbc_4041782348");
 
   return app.delete(collection);
 })
