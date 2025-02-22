@@ -1,6 +1,8 @@
 from fastapi import FastAPI, HTTPException
 import requests
+import pocketbase_init
 
+pocketbase_init.admin_auth()
 app = FastAPI()
 
 # PocketBase API URL
@@ -40,7 +42,7 @@ def enlist_volunteer(event_id: str, volunteer_id: str):
         raise HTTPException(status_code=404, detail="Event not found")
 
     # Get the volunteer details
-    volunteer = pocketbase_request("volunteer", "GET", record_id=volunteer_id)
+    volunteer = pocketbase_request("volunteers", "GET", record_id=volunteer_id)
     if not volunteer:
         raise HTTPException(status_code=404, detail="Volunteer not found")
 
@@ -72,7 +74,7 @@ def enlist_volunteer(event_id: str, volunteer_id: str):
 
     # Update volunteer's record
     volunteer_update = {"events_list": events_list}
-    pocketbase_request("volunteer", "PUT", data=volunteer_update, record_id=volunteer_id)
+    pocketbase_request("volunteers", "PUT", data={"id": volunteer_id, **volunteer_update}, record_id=volunteer_id)
 
     return {"message": "Volunteer enlisted successfully", "event_id": event_id, "volunteer_id": volunteer_id}
 
@@ -96,16 +98,16 @@ def delete_event(event_id: str):
 # CRUD Routes for Volunteers
 @app.get("/volunteers/{volunteer_id}")
 def get_volunteer(volunteer_id: str):
-    return pocketbase_request("volunteer", "GET", record_id=volunteer_id)
+    return pocketbase_request("volunteers", "GET", record_id=volunteer_id)
 
 @app.post("/volunteers")
 def create_volunteer(volunteer_data: dict):
-    return pocketbase_request("volunteer", "POST", data=volunteer_data)
+    return pocketbase_request("volunteers", "POST", data=volunteer_data)
 
 @app.put("/volunteers/{volunteer_id}")
 def update_volunteer(volunteer_id: str, volunteer_data: dict):
-    return pocketbase_request("volunteer", "PUT", data=volunteer_data, record_id=volunteer_id)
+    return pocketbase_request("volunteers", "PUT", data=volunteer_data, record_id=volunteer_id)
 
 @app.delete("/volunteers/{volunteer_id}")
 def delete_volunteer(volunteer_id: str):
-    return pocketbase_request("volunteer", "DELETE", record_id=volunteer_id)
+    return pocketbase_request("volunteers", "DELETE", record_id=volunteer_id)
