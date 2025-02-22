@@ -45,7 +45,7 @@ export default function Home() {
           <div className="w-1/2 flex flex-col p-10 justify-around">
             <div className="flex">
               <div className="flex gap-2 justify-center">
-                <h1 className="text-[150px] font-sans text-[#DA0000] font-extrabold ">
+                <h1 className="font-poppins animate-gradient bg-gradient-to-l from-indigo-700 to-cyan-200 bg-clip-text text-transparent text-[150px] ">
                   Bayani
                 </h1>
                 <div className="">
@@ -54,7 +54,7 @@ export default function Home() {
                     {titles.map((title, index) => (
                       <motion.span
                         key={index}
-                        className="text-center absolute font-normal text-[150px] animate-gradient bg-gradient-to-l from-indigo-700 to-cyan-200 bg-clip-text text-transparent font-sans "
+                        className="text-center absolute font-normal text-[150px] font-poppins text-[#DA0000] "
                         initial={{ opacity: 0, y: "-100" }}
                         transition={{ type: "spring", stiffness: 50 }}
                         animate={
@@ -77,8 +77,8 @@ export default function Home() {
               </div>
             </div>
             <div className="mb-10">
-              <p className="text-3xl text-center text-orange-400 font-sans font-bold">
-                Empowering Heroes, Uniting as One!
+              <p className="text-[35px] text-orange-400 font-sans font-bold top-5">
+                "Empowering Heroes, Uniting as One!"
               </p>
             </div>
             <div className="flex flex-col gap-8">
