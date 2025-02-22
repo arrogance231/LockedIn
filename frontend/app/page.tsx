@@ -1,4 +1,17 @@
 import Image from "next/image";
+import PocketBase from 'pocketbase';
+
+const pb = new PocketBase('http://127.0.0.1:8090');
+
+// example update data
+const data = {
+    "vol_name": "test",
+    "email": "test@example.com",
+    "pending_events": "JSON",
+    "reward_points": 123,
+    "location": "test",
+    "events_completed": 123
+};
 
 export default function Home() {
   return (
