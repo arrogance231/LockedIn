@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import useAuth from "../hooks/useAuth";
 import NavBar from "@/components/NavBar";
+import Image from "next/image";
+import { SparklesCore } from "@/components/ui/sparkles";
 
 export default function LoginPage() {
   const { user, login, loading } = useAuth();
@@ -37,12 +39,18 @@ export default function LoginPage() {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div className="relative">
-      <div>
-        <NavBar></NavBar>
-      </div>
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white">
-        <div className="w-full max-w-md p-8 bg-gray-800 rounded shadow-lg space-y-4">
+    <div className="h-screen overflow-hidden relative">
+      <div className="flex h-full items-center justify-center text-white [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)] ">
+        <div className="w-1/2 h-full flex items-center justify-center">
+          <Image
+            src="./login-bg.svg"
+            alt="bg"
+            width={0}
+            height={0}
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="m-4 flex flex-col w-1/2 p-8 bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0))] rounded shadow-lg space-y-4 z-10 relative">
           <h1 className="text-2xl font-bold text-center">Login</h1>
           {localError && (
             <p className="text-red-500 text-center">{localError}</p>
@@ -72,7 +80,28 @@ export default function LoginPage() {
             </button>
           </form>
         </div>
+        <div className="absolute inset-0 w-full h-full">
+          <SparklesCore
+            id="tsparticlesfullpage"
+            background="transparent"
+            minSize={0.6}
+            maxSize={1.4}
+            particleDensity={100}
+            className="w-full h-full"
+            particleColor="#FFFFFF"
+            speed={1}
+          />
+        </div>
       </div>
+      <a href="./browse">
+        <Image
+          src="./arrow.svg"
+          alt="a"
+          width={40}
+          height={40}
+          className="absolute top-4 right-4 p-2 transform rotate-45"
+        />
+      </a>
     </div>
   );
 }

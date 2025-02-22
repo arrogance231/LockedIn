@@ -1,6 +1,4 @@
 "use client";
-import React from "react";
-("use client");
 import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -8,11 +6,7 @@ import { navLinks } from "@/constants/index";
 import Image from "next/image";
 import useAuth from "@/app/hooks/useAuth";
 
-import useAuth from "@/app/hooks/useAuth";
-
 const NavBar = () => {
-  const { user, loading } = useAuth();
-
   const { user, loading, logout } = useAuth();
   const [isClient, setIsClient] = useState(false);
 
