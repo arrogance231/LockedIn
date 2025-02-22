@@ -5,9 +5,18 @@ import { LayoutDashboard, UserCog, Settings, LogOut } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
+//import { cn } from "@/lib/utils";
 import { CardBody, CardContainer, CardItem } from "./3d-card";
+import pb from "@/app/lib/pocketbase_init"
+// remove effect on description & title, keep on img.
+/*
+TO DO:
+1. CREATE Card per record in "event" collection
+2. Fill Value per card per event record
+3. Link each card to anchor href towards a dynamic route that uses the event ID as it's basis.
 
+
+*/
 export const Cards = () => {
   return (
     <div className="flex flex-col md:flex-row border-2 border-black p-4 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%)] rounded-lg overflow-hidden w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg mx-auto">
@@ -150,8 +159,20 @@ export const LogoIcon = () => {
 const Dashboard = () => {
   const [cards, setCards] = useState([<Cards key={0} />]);
 
-  const addCard = () => {
-    setCards([...cards, <Cards key={cards.length} />]);
+  const addCard = async () => {
+    const resultList = await pb.collection('event').getList(1, 50, {
+      
+    });
+
+    if (resultList.items.length === 0) {
+      return;
+    }
+
+    const newCards = resultList.items.map((_, index) => (
+      <Cards key={cards.length + index} />
+    ));
+
+    setCards([...cards, ...newCards]);
   };
 
   return (
@@ -167,12 +188,6 @@ const Dashboard = () => {
       <div className="flex w-full border-2 justify-center border-black p-4">
         <div className="grid grid-cols-3 gap-4">{cards}</div>
       </div>
-      <button
-        onClick={addCard}
-        className="mt-4 p-2 bg-blue-500 text-white rounded"
-      >
-        Add Card
-      </button>
     </div>
   );
 };
