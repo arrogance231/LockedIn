@@ -176,7 +176,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex flex-col bg-white w-full xl:p-12 overflow-y-auto">
+    <div className="flex flex-col bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%)] w-full xl:p-12 overflow-y-auto">
       <div className="flex flex-col h-auto mb-10">
         <div>
           <h1 className="text-bold text-4xl font-extrabold mb-4">Pick a Job</h1>
@@ -185,7 +185,7 @@ const Dashboard = () => {
           <p className="">Description</p>
         </div>
       </div>
-      <div className="flex w-full border-2 justify-center border-black p-4">
+      <div className="flex w-full border-2 justify-center border-black p-4 bg-white">
         <div className="grid grid-cols-3 gap-4">{cards}</div>
       </div>
     </div>
