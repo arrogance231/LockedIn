@@ -6,8 +6,49 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import Cards from "../cards";
+import { CardBody, CardContainer, CardItem } from "./3d-card";
 
+export const Cards = () => {
+  return (
+    <div className="flex flex-col md:flex-row border-2 border-black p-4 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%)] rounded-lg overflow-hidden w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg mx-auto">
+      <CardContainer className="flex-1">
+        <CardBody>
+          <CardItem className="text-xs sm:text-sm md:text-lg font-bold text-neutral-600 dark:text-white text-center">
+            Job Title
+          </CardItem>
+          <CardItem
+            as="p"
+            translateZ="60"
+            className="text-xs sm:text-sm md:text-base text-center"
+          >
+            Hover over this card to unleash the power of CSS perspective
+          </CardItem>
+          <CardItem className="w-full mt-2 md:mt-4">
+            <Image
+              src="./bg.svg"
+              height="1000"
+              width="1000"
+              className="h-24 sm:h-32 md:h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl border-2 border-black p-2"
+              alt="thumbnail"
+            />
+          </CardItem>
+          <div className="flex justify-center mt-5 md:mt-10">
+            <CardItem
+              as={Link}
+              href="https://twitter.com/mannupaaji"
+              target="__blank"
+              className="text-xs sm:text-sm md:text-base dark:text-white"
+            >
+              <button className="bg-black text-white px-3 py-1 sm:px-4 sm:py-2 md:px-5 md:py-3 rounded-lg">
+                More Details
+              </button>
+            </CardItem>
+          </div>
+        </CardBody>
+      </CardContainer>
+    </div>
+  );
+};
 export function SidebarDemo() {
   const links = [
     {
