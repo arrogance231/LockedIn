@@ -6,8 +6,7 @@ import OrganizationProfileCard from "../../components/organization/OrganizationP
 import OrganizationInfoSection from "../../components/organization/OrganizationInfoSection";
 import OrganizationEventTracker from "../../components/organization/OrganizationEventTracker";
 import OrganizationRecognition from "../../components/organization/OrganizationRecognition";
-import Image from "next/image";
-
+import NavBar from "@/components/NavBar";
 // ---- MOCK ORGANIZATION DATA ----
 const mockOrganization = {
   profilePicUrl:
@@ -87,6 +86,7 @@ const OrganizationChatbot = () => {
   const [suggestions, setSuggestions] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+  const [expanded, setExpanded] = useState<boolean>(false);
 
   // Build the prompt using mockOrganization info
   const prompt = `Based on the following organization details:
@@ -101,7 +101,13 @@ Hosted Events: ${mockOrganization.hostedEvents
 Upcoming Events: ${mockOrganization.upcomingEvents
     .map((event) => event.title)
     .join(", ")}
-Impact Metrics: Volunteers Engaged - ${mockOrganization.impactMetrics.volunteersEngaged}, Projects Hosted - ${mockOrganization.impactMetrics.projectsHosted}, Communities Impacted - ${mockOrganization.impactMetrics.communitiesImpacted}
+Impact Metrics: Volunteers Engaged - ${
+    mockOrganization.impactMetrics.volunteersEngaged
+  }, Projects Hosted - ${
+    mockOrganization.impactMetrics.projectsHosted
+  }, Communities Impacted - ${
+    mockOrganization.impactMetrics.communitiesImpacted
+  }
 
 Please provide actionable suggestions for increasing volunteer engagement and overall organizational impact.`;
 
@@ -139,23 +145,36 @@ Please provide actionable suggestions for increasing volunteer engagement and ov
   };
 
   return (
-    <div className="p-4 border-l border-gray-300 bg-gray-50 h-full overflow-y-auto">
-      <h2 className="text-xl font-bold mb-4">Chatbot Suggestions</h2>
-      <p className="mb-2 text-sm text-gray-600">
-        Get suggestions based on your organization's profile.
-      </p>
-      <button
-        onClick={getSuggestions}
-        className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        disabled={loading}
-      >
-        {loading ? "Loading..." : "Get Suggestions"}
-      </button>
-      {error && <p className="text-red-500">{error}</p>}
-      {suggestions && (
-        <div className="p-4 bg-white rounded shadow">
-          <h3 className="font-semibold mb-2">Suggestions:</h3>
-          <p className="text-gray-800 whitespace-pre-line">{suggestions}</p>
+    <div
+      className={`fixed bottom-4 right-4 p-4 border rounded-lg border-gray-300 bg-black text-white overflow-y-auto transition-all duration-300 ${
+        expanded ? "w-96 h-96" : "w-12 h-12"
+      }`}
+      onClick={() => setExpanded(!expanded)}
+    >
+      {expanded ? (
+        <>
+          <h2 className="text-xl font-bold mb-4">Chatbot Suggestions</h2>
+          <p className="mb-2 text-sm text-gray-300">
+            Get suggestions based on your organization's profile.
+          </p>
+          <button
+            onClick={getSuggestions}
+            className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            disabled={loading}
+          >
+            {loading ? "Loading..." : "Get Suggestions"}
+          </button>
+          {error && <p className="text-red-500">{error}</p>}
+          {suggestions && (
+            <div className="p-4 bg-white text-black rounded shadow">
+              <h3 className="font-semibold mb-2">Suggestions:</h3>
+              <p className="text-gray-800 whitespace-pre-line">{suggestions}</p>
+            </div>
+          )}
+        </>
+      ) : (
+        <div className="flex items-center justify-center h-full">
+          <span className="text-white">Chat</span>
         </div>
       )}
     </div>
@@ -187,10 +206,15 @@ const OrganizationPage = () => {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="relative h-screen">
+      <NavBar />
       {/* Left section - Profile Overview with Impact Metrics */}
-      <div className="w-1/2 overflow-y-auto">
-        <OrganizationProfileCard org={{ ...mockOrganization, bio }} />
+      <div className="w-full overflow-y-auto">
+        <div className="flex">
+          <div className="w-full p-4">
+            <OrganizationProfileCard org={{ ...mockOrganization, bio }} />
+          </div>
+        </div>
 
         {/* Additional Organization Sections */}
         <OrganizationInfoSection org={mockOrganization} />
@@ -308,8 +332,8 @@ const OrganizationPage = () => {
         )}
       </div>
 
-      {/* Right section - Chatbot Panel */}
-      <div className="w-1/2 border-l border-gray-300">
+      {/* Chatbot Panel */}
+      <div className="rounded-xl">
         <OrganizationChatbot />
       </div>
     </div>

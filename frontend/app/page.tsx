@@ -5,7 +5,14 @@ import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-
+import {
+  CardContent,
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { SparklesCore } from "@/components/ui/sparkles";
 
@@ -22,7 +29,7 @@ export default function Home() {
 
   return (
     <ObserverProvider>
-      <main className="flex flex-col motion-preset-compress motion-duration-300 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%)]">
+      <main className="flex flex-col motion-preset-compress motion-duration-300 gap-5 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%)]">
         {/* Navbar */}
         <div className="absolute top-0 left-0 w-full z-50">
           <NavBar />
@@ -132,7 +139,34 @@ export default function Home() {
         </section>
 
         {/* Section Divider */}
-        <section className="w-[100vw] h-[35vh] border-2  border-black mt-7"></section>
+        <section className="w-[100vw] h-[100vh] p-4 rounded-lg bg-white">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+          >
+            <Card>
+              <CardHeader>
+                <CardTitle></CardTitle>
+                <CardDescription></CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex justify-center">
+                  <Image
+                    src="/v1.jpg"
+                    alt="alt"
+                    width={1000}
+                    height={1000}
+                    className="rounded-lg shadow-lg"
+                  />
+                </div>
+              </CardContent>
+              <CardFooter>
+                <p></p>
+              </CardFooter>
+            </Card>
+          </motion.div>
+        </section>
 
         {/* "Why Bayani One?" Section */}
         <section className="h-auto w-screen intersect-once intersect:motion-preset-slide-up pb-20 relative">
@@ -169,7 +203,7 @@ export default function Home() {
             <div className="mx-auto max-w-7xl px-8 mt-24 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
               <div className="bg-white rounded-xl shadow-md p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow">
                 <Image
-                  src="/advocacy.svg"
+                  src="/advocay.svg"
                   alt="Find your Advocacy"
                   width={64}
                   height={64}
@@ -183,7 +217,7 @@ export default function Home() {
 
               <div className="bg-white rounded-xl shadow-md p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow">
                 <Image
-                  src="/join.svg"
+                  src="/train.svg"
                   alt="Join & Train"
                   width={64}
                   height={64}
@@ -219,7 +253,8 @@ export default function Home() {
                 />
                 <h3 className="text-xl font-semibold">Certify & Grow</h3>
                 <p className="mt-2 text-gray-700">
-                  Earn certifications and expand your network for future success.
+                  Earn certifications and expand your network for future
+                  success.
                 </p>
               </div>
             </div>
@@ -239,12 +274,12 @@ export default function Home() {
             />
             <p className="text-lg text-gray-700 leading-relaxed">
               BayaniOne is a platform dedicated to fostering and local
-              governance that drives impactful change. BayaniOne invites you
-              to contribute to society while gaining relevant skills
-              and experiences in various fields of volunteerism and civic
-              engagement. By uniting people from all walks of life, we strive
-              to create a supportive and collaborative environment for
-              meaningful social impact.
+              governance that drives impactful change. BayaniOne invites you to
+              contribute to society while gaining relevant skills and
+              experiences in various fields of volunteerism and civic
+              engagement. By uniting people from all walks of life, we strive to
+              create a supportive and collaborative environment for meaningful
+              social impact.
             </p>
           </div>
         </section>

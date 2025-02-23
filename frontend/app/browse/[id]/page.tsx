@@ -48,15 +48,15 @@ export default async function EventPage({ params }: EventPageProps) {
       <NavBar />
       <div className="flex flex-col h-screen w-screen bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%)] xl:p-12 overflow-y-auto">
         {event.picture && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 p-4 bg-white shadow-lg rounded-lg h-[80vh]">
-            <div className="col-span-1">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 p-4 bg-white shadow-lg rounded-lg h-[100vh]">
+            <div className="col-span-1 h-full">
               <img
                 src={event.picture}
                 alt={event.event_title}
                 className="w-full h-full object-cover rounded-lg"
               />
             </div>
-            <div className="grid grid-cols-2 gap-4 col-span-1">
+            <div className="grid grid-cols-2 gap-4 col-span-1 h-full">
               {[...Array(4)].map((_, index) => (
                 <img
                   key={index}
@@ -68,7 +68,7 @@ export default async function EventPage({ params }: EventPageProps) {
             </div>
           </div>
         )}
-        <div className="flex flex-col h-auto md:h-[80vh] mt-16 mb-10 p-4 bg-white shadow-lg rounded-lg">
+        <div className="flex flex-col gap-6 h-auto md:h-[80vh] mt-16 mb-10 p-4 bg-white shadow-lg rounded-lg">
           <div className="flex flex-col md:flex-row justify-between items-center mb-4">
             <h1 className="text-2xl md:text-4xl font-extrabold text-gray-800">
               {event.event_title}
@@ -83,6 +83,9 @@ export default async function EventPage({ params }: EventPageProps) {
             </p>
           </div>
           <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+            <button className="bg-blue-500 text-white px-4 py-2 rounded-lg mb-4 md:mb-0">
+              Contact Now
+            </button>
             <p className="text-base md:text-lg text-gray-600">
               Date: {new Date(event.date).toLocaleDateString()}
             </p>
