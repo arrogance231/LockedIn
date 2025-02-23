@@ -2,28 +2,31 @@
 
 import React, { useState } from "react";
 import { useAuth } from "@/components/organization/AuthContext";
+import dynamic from "next/dynamic";
+import CreateJobPosting from "./CreateJobPosting";
 
 interface Event {
-  id: number;
+  id: string;
   title: string;
   date: string;
+  location?: string; // Location is optional for existing events
   volunteers: string[];
 }
 
 interface Posting {
   id: string;
   jobTitle: string;
-  jobPoster: string;
   jobDescription: string;
+  date: string;
   latitude: number;
   longitude: number;
   location: string;
   photos: string[];
 }
 
-// Type Guard to check if an item is an Event
+// Type Guard: Check if the item is an Event
 const isEvent = (item: Event | Posting): item is Event => {
-  return (item as Event).volunteers !== undefined;
+  return "volunteers" in item;
 };
 
 const formatDate = (dateString: string) => {
@@ -40,36 +43,13 @@ const OrganizationEventTracker: React.FC<{ events: Event[] }> = ({ events }) => 
   const [expandedEvent, setExpandedEvent] = useState<string | null>(null);
   const [postings, setPostings] = useState<Posting[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newPosting, setNewPosting] = useState<Posting>({
-    id: "",
-    jobTitle: "",
-    jobPoster: "",
-    jobDescription: "",
-    latitude: 0,
-    longitude: 0,
-    location: "",
-    photos: [],
-  });
 
   const toggleExpand = (eventId: string) => {
     setExpandedEvent(expandedEvent === eventId ? null : eventId);
   };
 
-  const handleCreatePosting = () => {
-    if (!newPosting.jobTitle || !newPosting.location) return;
-
-    setPostings([...postings, { ...newPosting, id: Date.now().toString() }]);
-    setIsModalOpen(false);
-    setNewPosting({
-      id: "",
-      jobTitle: "",
-      jobPoster: "",
-      jobDescription: "",
-      latitude: 0,
-      longitude: 0,
-      location: "",
-      photos: [],
-    });
+  const handleCreatePosting = (newPosting: Posting) => {
+    setPostings([...postings, newPosting]);
   };
 
   return (
@@ -96,11 +76,15 @@ const OrganizationEventTracker: React.FC<{ events: Event[] }> = ({ events }) => 
                 <h3 className="text-lg font-semibold">
                   {isEvent(item) ? item.title : item.jobTitle}
                 </h3>
-                <p className="text-gray-500">
-                  {isEvent(item) ? formatDate(item.date) : item.location}
+                <p className="text-gray-500">{formatDate(item.date)}</p>
+
+                {/* Display Location */}
+                <p className="text-gray-600 text-sm mt-1">
+                  <strong>📍 Location:</strong>{" "}
+                  {isEvent(item) ? item.location ?? "Not specified" : item.location}
                 </p>
 
-                {/* Volunteer List (Only for Events) */}
+                {/* Volunteer List for Events */}
                 {isEvent(item) && (
                   <div className="mt-3">
                     <h4 className="font-medium text-gray-700">Volunteers:</h4>
@@ -108,12 +92,11 @@ const OrganizationEventTracker: React.FC<{ events: Event[] }> = ({ events }) => 
                       {(isExpanded || !isOrg
                         ? item.volunteers
                         : item.volunteers.slice(0, 4)
-                      ).map((volunteer: string, index: number) => (
+                      ).map((volunteer, index) => (
                         <li key={index}>• {volunteer}</li>
                       ))}
                     </ul>
 
-                    {/* Expand/Collapse button (Only for Logged-in Organizations) */}
                     {item.volunteers.length > 4 && (
                       isOrg ? (
                         <button
@@ -136,59 +119,8 @@ const OrganizationEventTracker: React.FC<{ events: Event[] }> = ({ events }) => 
         <p className="text-gray-500">No upcoming events listed.</p>
       )}
 
-      {/* Create Posting Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h2 className="text-lg font-semibold mb-3">Create a Job Posting</h2>
-
-            <label className="block font-semibold">Job Title</label>
-            <input
-              type="text"
-              className="border p-2 w-full rounded mb-2"
-              value={newPosting.jobTitle}
-              onChange={(e) => setNewPosting({ ...newPosting, jobTitle: e.target.value })}
-            />
-
-            <label className="block font-semibold">Job Poster</label>
-            <input
-              type="text"
-              className="border p-2 w-full rounded mb-2"
-              value={newPosting.jobPoster}
-              onChange={(e) => setNewPosting({ ...newPosting, jobPoster: e.target.value })}
-            />
-
-            <label className="block font-semibold">Description</label>
-            <textarea
-              className="border p-2 w-full rounded mb-2"
-              value={newPosting.jobDescription}
-              onChange={(e) => setNewPosting({ ...newPosting, jobDescription: e.target.value })}
-            />
-
-            <label className="block font-semibold">Location</label>
-            <input
-              type="text"
-              className="border p-2 w-full rounded mb-2"
-              value={newPosting.location}
-              onChange={(e) => setNewPosting({ ...newPosting, location: e.target.value })}
-            />
-
-            <div className="flex justify-between mt-4">
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="px-4 py-2 bg-gray-400 text-white rounded"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleCreatePosting}
-                className="px-4 py-2 bg-blue-500 text-white rounded"
-              >
-                Create
-              </button>
-            </div>
-          </div>
-        </div>
+        <CreateJobPosting onClose={() => setIsModalOpen(false)} onCreate={handleCreatePosting} />
       )}
     </div>
   );
