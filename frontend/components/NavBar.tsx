@@ -32,10 +32,9 @@ const NavBar = () => {
       </div>
 
       {/* 🌐 Navigation Links */}
-      <ul className="hidden lg:flex items-ce  nter space-x-4 flex-grow justify-center font-poppins gap-10 font-extrabold mx-auto">
-        <li>Home</li>
-        <li>Browse</li>
-        <li>About Us</li>
+      <ul className="hidden lg:flex items-center space-x-4 flex-grow justify-center font-poppins gap-10 font-extrabold mx-auto text-black">
+      <a href="./"><li>Home</li></a>
+      <a href="./browse"><li>Browse</li></a>
         {isLoggedIn && isOrganization && (
           <li>
             <Link href="/create">
