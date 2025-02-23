@@ -120,7 +120,7 @@ export default function Home() {
           </div>
 
           {/* Right Image */}
-          <div className="w-1/2 flex justify-center items-center h-screen absolute right-2 top-0">
+          <div className="w-1/2 flex justify-center items-center h-screen absolute right-2 top-17">
             <Image
               src="/head.svg"
               alt="Hero Image"
@@ -132,10 +132,10 @@ export default function Home() {
         </section>
 
         {/* Section Divider */}
-        <section className="w-[100vw] h-[30vh] border-2 border-black mt-20"></section>
+        <section className="w-[100vw] h-[35vh] border-2  border-black mt-7"></section>
 
         {/* "Why Bayani One?" Section */}
-        <section className="h-screen w-screen intersect-once intersect:motion-preset-slide-up">
+        <section className="h-auto w-screen intersect-once intersect:motion-preset-slide-up pb-20 relative">
           <ContainerScroll
             titleComponent={
               <>
@@ -151,6 +151,7 @@ export default function Home() {
               </>
             }
           >
+            {/* Sparkles Background */}
             <div className="absolute inset-0 w-full h-full">
               <SparklesCore
                 id="tsparticlesfullpage"
@@ -163,19 +164,113 @@ export default function Home() {
                 speed={4}
               />
             </div>
-            <Image
-              src="/image.svg"
-              alt="Hero"
-              height={720}
-              width={1400}
-              className="mx-auto rounded-2xl h-full object-left-top"
-              draggable={false}
-            />
+
+            {/* Feature Cards (4 columns on large screens) */}
+            <div className="mx-auto max-w-7xl px-8 mt-24 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
+              <div className="bg-white rounded-xl shadow-md p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow">
+                <Image
+                  src="/advocacy.svg"
+                  alt="Find your Advocacy"
+                  width={64}
+                  height={64}
+                  className="mx-auto mb-4"
+                />
+                <h3 className="text-xl font-semibold">Find Your Advocacy</h3>
+                <p className="mt-2 text-gray-700">
+                  Discover meaningful causes that align with your passion.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-md p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow">
+                <Image
+                  src="/join.svg"
+                  alt="Join & Train"
+                  width={64}
+                  height={64}
+                  className="mx-auto mb-4"
+                />
+                <h3 className="text-xl font-semibold">Join & Train</h3>
+                <p className="mt-2 text-gray-700">
+                  Engage in training and workshops to amplify your impact.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-md p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow">
+                <Image
+                  src="/impact.svg"
+                  alt="Volunteer & Impact"
+                  width={64}
+                  height={64}
+                  className="mx-auto mb-4"
+                />
+                <h3 className="text-xl font-semibold">Volunteer & Impact</h3>
+                <p className="mt-2 text-gray-700">
+                  Make a real difference in your community by taking action.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-md p-6 flex flex-col items-center text-center hover:shadow-xl transition-shadow">
+                <Image
+                  src="/certify.svg"
+                  alt="Certify & Grow"
+                  width={64}
+                  height={64}
+                  className="mx-auto mb-4"
+                />
+                <h3 className="text-xl font-semibold">Certify & Grow</h3>
+                <p className="mt-2 text-gray-700">
+                  Earn certifications and expand your network for future success.
+                </p>
+              </div>
+            </div>
           </ContainerScroll>
         </section>
 
-        {/* Empty Section (for additional content) */}
-        <section></section>
+        {/* About Us Section */}
+        <section className="py-16 px-8 flex flex-col items-center bg-white">
+          <h2 className="text-4xl font-bold mb-6">About Us</h2>
+          <div className="flex flex-col md:flex-row items-center gap-8 max-w-6xl">
+            <Image
+              src="/volunteer.svg"
+              alt="Volunteer"
+              width={300}
+              height={300}
+              className="rounded-lg shadow-md"
+            />
+            <p className="text-lg text-gray-700 leading-relaxed">
+              BayaniOne is a platform dedicated to fostering and local
+              governance that drives impactful change. BayaniOne invites you
+              to contribute to society while gaining relevant skills
+              and experiences in various fields of volunteerism and civic
+              engagement. By uniting people from all walks of life, we strive
+              to create a supportive and collaborative environment for
+              meaningful social impact.
+            </p>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="bg-black text-white py-8 px-8">
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
+            {/* Logo / Brand */}
+            <div className="flex flex-col items-start mb-4 md:mb-0">
+              <h3 className="text-3xl font-bold">BayaniOne</h3>
+              <p className="text-sm text-gray-300 mt-1">
+                Empowering Heroes, Uniting as One!
+              </p>
+            </div>
+
+            {/* Contact Info */}
+            <div className="flex flex-col items-start text-sm text-gray-300 space-y-1">
+              <span>Location: Barangay Banaba, San Mateo, Rizal</span>
+              <span>Phone: 123-456-7890</span>
+              <span>Email: info@bayanione.com</span>
+            </div>
+          </div>
+          <div className="text-center text-xs text-gray-500 mt-4">
+            © {new Date().getFullYear()} BayaniOne. All rights reserved.
+          </div>
+        </footer>
       </main>
     </ObserverProvider>
   );
