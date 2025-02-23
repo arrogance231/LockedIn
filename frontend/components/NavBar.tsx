@@ -77,7 +77,7 @@ const NavBar = () => {
                 Log In
               </button>
             </Link>
-            <Link href="/signup">
+            <Link href="/">
               <button className="bg-gray-600 p-2 rounded-lg text-white ">
                 Sign Up
               </button>

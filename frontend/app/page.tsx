@@ -81,13 +81,14 @@ export default function Home() {
 
             {/* Quote */}
             <div className="mb-10">
-              <p className="text-[35px] text-orange-400 font-sans font-bold top-5">
+              <p className="text-[30px] text-orange-400 font-sans font-bold top-5">
                 "Empowering Heroes, Uniting as One!"
               </p>
             </div>
 
             {/* Buttons */}
             <div className="flex flex-col gap-8">
+              <h1 className="text-center text-6xl"> Which Are You?</h1>
               {/* Volunteer Button */}
               <div className="transform transition-transform duration-500 hover:translate-x-10">
                 <Link href="/signup/volunteer">
@@ -105,7 +106,6 @@ export default function Home() {
                   </div>
                 </Link>
               </div>
-
               {/* Organization Button */}
               <div className="transform transition-transform duration-500 hover:translate-x-10">
                 <Link href="/signup/organization">
