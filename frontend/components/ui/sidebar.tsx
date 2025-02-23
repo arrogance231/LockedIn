@@ -16,6 +16,8 @@ interface SidebarContextProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   animate: boolean;
+  selectedCategory: string;
+  setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const SidebarContext = createContext<SidebarContextProps | undefined>(
@@ -42,12 +44,15 @@ export const SidebarProvider = ({
   animate?: boolean;
 }) => {
   const [openState, setOpenState] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const open = openProp !== undefined ? openProp : openState;
   const setOpen = setOpenProp !== undefined ? setOpenProp : setOpenState;
 
   return (
-    <SidebarContext.Provider value={{ open, setOpen, animate }}>
+    <SidebarContext.Provider
+      value={{ open, setOpen, animate, selectedCategory, setSelectedCategory }}
+    >
       {children}
     </SidebarContext.Provider>
   );
@@ -163,7 +168,7 @@ export const SidebarLink = ({
   className?: string;
   props?: LinkProps;
 }) => {
-  const { open, animate } = useSidebar();
+  const { open, animate, setSelectedCategory } = useSidebar();
   return (
     <Link
       href={link.href}
@@ -171,6 +176,7 @@ export const SidebarLink = ({
         "flex items-center justify-start gap-2 group/sidebar py-2",
         className
       )}
+      onClick={() => setSelectedCategory(link.label)}
       {...props}
     >
       {link.icon}
